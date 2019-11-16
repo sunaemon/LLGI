@@ -1,6 +1,6 @@
 trigger:
 
-- master
+- azure
 
 jobs:
   - job: Windows
@@ -72,7 +72,7 @@ jobs:
 
   - job: Linux
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
 
     steps:
       - task: Bash@3
@@ -97,7 +97,16 @@ jobs:
             git lfs pull
             sudo apt -y install libx11-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev libudev-dev
             sudo apt -y install libglu1-mesa-dev mesa-common-dev
-            
+
+            echo deb http://httpredir.debian.org/debian jessie-backports main > /etc/apt/sources.list.d/jessie-backports.list
+            sudo apt-get -y jessie-backports install mesa-vulkan-drivers
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            vulkaninfo
+
       - task: CMake@1
         inputs:
           cmakeArgs: '.. -DBUILD_TEST=ON'
