@@ -79,6 +79,9 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
+            sudo apt-add-repository ppa:canonical-x/vulkan
+            sudo apt-get -y install libvulkan1 libvulkan1:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
+
             wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt-key add -
             sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.1.121-xenial.list http://packages.lunarg.com/vulkan/1.1.121/lunarg-vulkan-1.1.121-xenial.list
             sudo apt update
@@ -98,7 +101,7 @@ jobs:
             sudo apt -y install libx11-dev libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev libudev-dev
             sudo apt -y install libglu1-mesa-dev mesa-common-dev
 
-            sudo apt-get -y install mesa-vulkan-drivers
+            
 
       - task: Bash@3
         inputs:
