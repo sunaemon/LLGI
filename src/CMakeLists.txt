@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(LLGI)
 
+cmake_policy(SET CMP0063 NEW)
+
 file(GLOB files *.h *.cpp)
 file(GLOB files_pc PC/*.h PC/*.cpp)
 

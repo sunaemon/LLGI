@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(ShaderTranspilerCore)
 
+cmake_policy(SET CMP0063 NEW)
+
 add_library(
   ShaderTranspilerCore STATIC ShaderTranspilerCore.cpp ShaderTranspilerCore.h
                               ResourceLimits.cpp ResourceLimits.h)
