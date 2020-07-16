@@ -5,7 +5,7 @@ add_executable(ShaderTranspiler main.cpp)
 
 cmake_policy(SET CMP0063 NEW)
 
-target_compile_features(ShaderTranspiler PUBLIC cxx_std_11)
+target_compile_features(ShaderTranspiler PUBLIC cxx_std_14)
 
 target_include_directories(ShaderTranspiler PUBLIC ../ShaderTranspilerCore)
 
