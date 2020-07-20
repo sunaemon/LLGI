@@ -77,7 +77,7 @@ struct PlatformMetal_Impl
 
 	void generateLayer()
 	{
-		NSWindow* nswindow = (NSWindow*)window_->GetNativePtr(0);
+		NSWindow* nswindow = reinterpret_cast<NSWindow*>(window_->GetNativePtr(0));
 		auto frameBufferSize = window_->GetFrameBufferSize();
 
 		layer = [CAMetalLayer layer];
@@ -135,7 +135,7 @@ RenderPass* PlatformMetal::GetCurrentScreen(const Color8& clearColor, bool isCol
 	// delay init
 	ringBuffers_[ringIndex_].renderTexture->Reset(this->impl->drawable.texture);
 	auto texPtr = ringBuffers_[ringIndex_].renderTexture.get();
-	ringBuffers_[ringIndex_].renderPass->UpdateRenderTarget((Texture**)&texPtr, 1, nullptr, nullptr, nullptr);
+	ringBuffers_[ringIndex_].renderPass->UpdateRenderTarget(reinterpret_cast<Texture**>(&texPtr), 1, nullptr, nullptr, nullptr);
 
 	ringBuffers_[ringIndex_].renderPass->SetClearColor(clearColor);
 	ringBuffers_[ringIndex_].renderPass->SetIsColorCleared(isColorCleared);

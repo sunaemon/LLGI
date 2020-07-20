@@ -238,22 +238,36 @@ bool CommandList::BeginRenderPassWithPlatformPtr(void* platformPtr)
 	return true;
 }
 
-void CommandList::SetData(VertexBuffer* vertexBuffer, int32_t offset, int32_t size, const void* data)
+void CommandList::SetData([[maybe_unused]] VertexBuffer* vertexBuffer,
+						  [[maybe_unused]] int32_t offset,
+						  [[maybe_unused]] int32_t size,
+						  [[maybe_unused]] const void* data)
 {
 	assert(0); // TODO: Not implemented.
 }
 
-void CommandList::SetData(IndexBuffer* indexBuffer, int32_t offset, int32_t size, const void* data)
+void CommandList::SetData([[maybe_unused]] IndexBuffer* indexBuffer,
+						  [[maybe_unused]] int32_t offset,
+						  [[maybe_unused]] int32_t size,
+						  [[maybe_unused]] const void* data)
 {
 	assert(0); // TODO: Not implemented.
 }
 
-void CommandList::SetData(ConstantBuffer* constantBuffer, int32_t offset, int32_t size, const void* data)
+void CommandList::SetData([[maybe_unused]] ConstantBuffer* constantBuffer,
+						  [[maybe_unused]] int32_t offset,
+						  [[maybe_unused]] int32_t size,
+						  [[maybe_unused]] const void* data)
 {
 	assert(0); // TODO: Not implemented.
 }
 
-void CommandList::SetImageData2D(Texture* texture, int32_t x, int32_t y, int32_t width, int32_t height, const void* data)
+void CommandList::SetImageData2D([[maybe_unused]] Texture* texture,
+								 [[maybe_unused]] int32_t x,
+								 [[maybe_unused]] int32_t y,
+								 [[maybe_unused]] int32_t width,
+								 [[maybe_unused]] int32_t height,
+								 [[maybe_unused]] const void* data)
 {
 	assert(0); // TODO: Not implemented.
 }

@@ -105,7 +105,7 @@ Platform* CreatePlatform(const PlatformParameter& parameter, Window* window)
 	return nullptr;
 }
 
-Compiler* CreateCompiler(DeviceType device)
+Compiler* CreateCompiler([[maybe_unused]] DeviceType device)
 {
 #ifdef ENABLE_CREATE_COMPILER
 

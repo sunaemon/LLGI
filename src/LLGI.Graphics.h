@@ -50,12 +50,15 @@ protected:
 	/**
 		@brief	create constant buffer
 	*/
-	virtual ConstantBuffer* CreateConstantBufferInternal(int32_t size) { return nullptr; }
+	virtual ConstantBuffer* CreateConstantBufferInternal([[maybe_unused]] int32_t size) { return nullptr; }
 
 	/**
 		@brief	reinitialize buffer with a size
 	*/
-	virtual ConstantBuffer* ReinitializeConstantBuffer(ConstantBuffer* cb, int32_t size) { return nullptr; }
+	virtual ConstantBuffer* ReinitializeConstantBuffer([[maybe_unused]] ConstantBuffer* cb, [[maybe_unused]] int32_t size)
+	{
+		return nullptr;
+	}
 
 public:
 	SingleFrameMemoryPool(int32_t swapBufferCount = 3);
@@ -110,9 +113,9 @@ struct RenderPassPipelineStateKey
 			ret += std::hash<bool>()(key.HasResolvedRenderTarget);
 			ret += std::hash<bool>()(key.HasResolvedDepthTarget);
 
-			for (int32_t i = 0; i < key.RenderTargetFormats.size(); i++)
+			for (size_t i = 0; i < key.RenderTargetFormats.size(); i++)
 			{
-				ret += std::hash<uint64_t>()((uint64_t)key.RenderTargetFormats.at(i));
+				ret += std::hash<uint64_t>()(static_cast<uint64_t>(key.RenderTargetFormats.at(i)));
 			}
 
 			return ret;
@@ -258,18 +261,25 @@ public:
 	*/
 	virtual ConstantBuffer* CreateConstantBuffer(int32_t size);
 
-	virtual RenderPass* CreateRenderPass(Texture** textures, int32_t textureCount, Texture* depthTexture) { return nullptr; }
-
-	virtual RenderPass* CreateRenderPass(Texture* texture, Texture* resolvedTexture, Texture* depthTexture, Texture* resolvedDepthTexture)
+	virtual RenderPass*
+	CreateRenderPass([[maybe_unused]] Texture** textures, [[maybe_unused]] int32_t textureCount, [[maybe_unused]] Texture* depthTexture)
 	{
 		return nullptr;
 	}
 
-	virtual Texture* CreateTexture(const TextureInitializationParameter& parameter) { return nullptr; }
+	virtual RenderPass* CreateRenderPass([[maybe_unused]] Texture* texture,
+										 [[maybe_unused]] Texture* resolvedTexture,
+										 [[maybe_unused]] Texture* depthTexture,
+										 [[maybe_unused]] Texture* resolvedDepthTexture)
+	{
+		return nullptr;
+	}
 
-	virtual Texture* CreateRenderTexture(const RenderTextureInitializationParameter& parameter) { return nullptr; }
+	virtual Texture* CreateTexture([[maybe_unused]] const TextureInitializationParameter& parameter) { return nullptr; }
 
-	virtual Texture* CreateDepthTexture(const DepthTextureInitializationParameter& parameter) { return nullptr; }
+	virtual Texture* CreateRenderTexture([[maybe_unused]] const RenderTextureInitializationParameter& parameter) { return nullptr; }
+
+	virtual Texture* CreateDepthTexture([[maybe_unused]] const DepthTextureInitializationParameter& parameter) { return nullptr; }
 
 	/**
 		@brief	create texture from pointer or id in current platform
@@ -290,7 +300,10 @@ public:
 		This is a function to create an object.
 		But it is very fast. So it can call it in everyframe.
 	*/
-	virtual RenderPassPipelineState* CreateRenderPassPipelineState(const RenderPassPipelineStateKey& key) { return nullptr; }
+	virtual RenderPassPipelineState* CreateRenderPassPipelineState([[maybe_unused]] const RenderPassPipelineStateKey& key)
+	{
+		return nullptr;
+	}
 
 	/** For testing. Wait for all commands in queue to complete. Then read data from specified render target. */
 	virtual std::vector<uint8_t> CaptureRenderTarget(Texture* renderTarget);

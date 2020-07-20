@@ -6,7 +6,7 @@ namespace LLGI
 
 void* IndexBuffer::Lock() { return nullptr; }
 
-void* IndexBuffer::Lock(int32_t offset, int32_t size) { return nullptr; }
+void* IndexBuffer::Lock([[maybe_unused]] int32_t offset, [[maybe_unused]] int32_t size) { return nullptr; }
 
 void IndexBuffer::Unlock() {}
 

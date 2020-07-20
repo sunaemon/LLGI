@@ -293,24 +293,24 @@ void CommandListMetal::Draw(int32_t primitiveCount, int32_t instanceCount)
 	}
 
 	// Assign textures
-	for (int stage_ind = 0; stage_ind < (int32_t)ShaderStageType::Max; stage_ind++)
+	for (int stage_ind = 0; stage_ind < static_cast<int32_t>(ShaderStageType::Max); stage_ind++)
 	{
-		for (int unit_ind = 0; unit_ind < currentTextures[stage_ind].size(); unit_ind++)
+		for (size_t unit_ind = 0; unit_ind < currentTextures[stage_ind].size(); unit_ind++)
 		{
 			if (currentTextures[stage_ind][unit_ind].texture == nullptr)
 				continue;
 
-			auto texture = (TextureMetal*)currentTextures[stage_ind][unit_ind].texture;
-			auto wm = (int32_t)currentTextures[stage_ind][unit_ind].wrapMode;
-			auto mm = (int32_t)currentTextures[stage_ind][unit_ind].minMagFilter;
+			auto texture = static_cast<TextureMetal*>(currentTextures[stage_ind][unit_ind].texture);
+			auto wm = static_cast<int32_t>(currentTextures[stage_ind][unit_ind].wrapMode);
+			auto mm = static_cast<int32_t>(currentTextures[stage_ind][unit_ind].minMagFilter);
 
-			if (stage_ind == (int32_t)ShaderStageType::Vertex)
+			if (stage_ind == static_cast<int32_t>(ShaderStageType::Vertex))
 			{
 				[impl->renderEncoder setVertexTexture:texture->GetImpl()->texture atIndex:unit_ind];
 				[impl->renderEncoder setVertexSamplerState:samplerStates[wm][mm] atIndex:unit_ind];
 			}
 
-			if (stage_ind == (int32_t)ShaderStageType::Pixel)
+			if (stage_ind == static_cast<int32_t>(ShaderStageType::Pixel))
 			{
 				[impl->renderEncoder setFragmentTexture:texture->GetImpl()->texture atIndex:unit_ind];
 				[impl->renderEncoder setFragmentSamplerState:samplerStates[wm][mm] atIndex:unit_ind];
@@ -380,7 +380,7 @@ void CommandListMetal::CopyTexture(Texture* src, Texture* dst)
 
 	auto regionSize = srcTex->GetSizeAs2D();
 
-	MTLRegion region = {{0, 0, 0}, {(uint32_t)regionSize.X, (uint32_t)regionSize.Y, 1}};
+	MTLRegion region = {{0, 0, 0}, {static_cast<uint32_t>(regionSize.X), static_cast<uint32_t>(regionSize.Y), 1}};
 
 	[blitEncoder copyFromTexture:srcTex->GetImpl()->texture
 					 sourceSlice:0

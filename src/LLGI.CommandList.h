@@ -111,7 +111,7 @@ public:
 	/**
 		@brief	copy a texture
 	*/
-	virtual void CopyTexture(Texture* src, Texture* dst) {}
+	virtual void CopyTexture([[maybe_unused]] Texture* src, [[maybe_unused]] Texture* dst) {}
 
 	/**
 		@brief specify textures

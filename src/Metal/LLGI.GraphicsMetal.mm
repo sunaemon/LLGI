@@ -99,7 +99,7 @@ void GraphicsMetal::Execute(CommandList* commandList)
 
 	executingCommandList_.erase(it, executingCommandList_.end());
 
-	auto commandList_ = (CommandListMetal*)commandList;
+	auto commandList_ = reinterpret_cast<CommandListMetal*>(commandList);
 	commandList_->GetImpl()->isCompleted = false;
 	impl->Execute(commandList_->GetImpl());
 
@@ -235,8 +235,11 @@ GraphicsMetal::CreateRenderPass(Texture* texture, Texture* resolvedTexture, Text
 	std::array<Texture*, 1> textures;
 	textures[0] = const_cast<Texture*>(texture);
 
-	if (!renderPass->UpdateRenderTarget(
-			textures.data(), 1, (Texture*)depthTexture, (Texture*)resolvedTexture, (Texture*)resolvedDepthTexture))
+	if (!renderPass->UpdateRenderTarget(textures.data(),
+										1,
+										reinterpret_cast<Texture*>(depthTexture),
+										reinterpret_cast<Texture*>(resolvedTexture),
+										reinterpret_cast<Texture*>(resolvedDepthTexture)))
 	{
 		SafeRelease(renderPass);
 		return nullptr;

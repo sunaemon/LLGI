@@ -151,10 +151,10 @@ int main(int argc, char* argv[])
 		if (file)
 		{
 			std::vector<uint8_t> ret;
-			auto size = (int)file.tellg();
+			auto size = static_cast<int>(file.tellg());
 			ret.resize(size);
 			file.seekg(0, file.beg);
-			file.read((char*)ret.data(), size);
+			file.read(reinterpret_cast<char*>(ret.data()), size);
 			return ret;
 		}
 		return std::vector<uint8_t>();

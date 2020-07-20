@@ -5,6 +5,10 @@ namespace LLGI
 
 void Compiler::Initialize() {}
 
-void Compiler::Compile(CompilerResult& result, const char* code, ShaderStageType shaderStage) {}
+void Compiler::Compile([[maybe_unused]] CompilerResult& result,
+					   [[maybe_unused]] const char* code,
+					   [[maybe_unused]] ShaderStageType shaderStage)
+{
+}
 
 } // namespace LLGI

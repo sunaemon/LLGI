@@ -226,7 +226,7 @@ struct DataStructure
 
 template <class T> void SafeAddRef(T& t)
 {
-	if (t != NULL)
+	if (t != nullptr)
 	{
 		t->AddRef();
 	}
@@ -234,10 +234,10 @@ template <class T> void SafeAddRef(T& t)
 
 template <class T> void SafeRelease(T& t)
 {
-	if (t != NULL)
+	if (t != nullptr)
 	{
 		t->Release();
-		t = NULL;
+		t = nullptr;
 	}
 }
 
@@ -250,10 +250,10 @@ template <class T> void SafeAssign(T& t, T value)
 
 template <class T> void SafeDelete(T& t)
 {
-	if (t != NULL)
+	if (t != nullptr)
 	{
 		delete t;
-		t = NULL;
+		t = nullptr;
 	}
 }
 

@@ -82,7 +82,7 @@ ConstantBuffer* SingleFrameMemoryPool::CreateConstantBuffer(int32_t size)
 
 bool RenderPass::assignRenderTextures(Texture** textures, int32_t count)
 {
-	for (size_t i = 0; i < count; i++)
+	for (int32_t i = 0; i < count; i++)
 	{
 		if (!(textures[i]->GetType() == TextureType::Render || textures[i]->GetType() == TextureType::Screen))
 		{
@@ -91,7 +91,7 @@ bool RenderPass::assignRenderTextures(Texture** textures, int32_t count)
 		}
 	}
 
-	for (size_t i = 0; i < count; i++)
+	for (int32_t i = 0; i < count; i++)
 	{
 		SafeAddRef(textures[i]);
 	}
@@ -103,7 +103,7 @@ bool RenderPass::assignRenderTextures(Texture** textures, int32_t count)
 
 	renderTextures_.resize(count);
 
-	for (size_t i = 0; i < count; i++)
+	for (int32_t i = 0; i < count; i++)
 	{
 		renderTextures_.at(i) = textures[i];
 	}
@@ -317,35 +317,39 @@ Graphics::~Graphics()
 
 void Graphics::SetWindowSize(const Vec2I& windowSize) { windowSize_ = windowSize; }
 
-void Graphics::Execute(CommandList* commandList) {}
+void Graphics::Execute([[maybe_unused]] CommandList* commandList) {}
 
 // RenderPass* Graphics::GetCurrentScreen(const Color8& clearColor, bool isColorCleared, bool isDepthCleared) { return nullptr; }
 
-VertexBuffer* Graphics::CreateVertexBuffer(int32_t size) { return nullptr; }
+VertexBuffer* Graphics::CreateVertexBuffer([[maybe_unused]] int32_t size) { return nullptr; }
 
-IndexBuffer* Graphics::CreateIndexBuffer(int32_t stride, int32_t count) { return nullptr; }
+IndexBuffer* Graphics::CreateIndexBuffer([[maybe_unused]] int32_t stride, [[maybe_unused]] int32_t count) { return nullptr; }
 
-Shader* Graphics::CreateShader(DataStructure* data, int32_t count) { return nullptr; }
+Shader* Graphics::CreateShader([[maybe_unused]] DataStructure* data, [[maybe_unused]] int32_t count) { return nullptr; }
 
 PipelineState* Graphics::CreatePiplineState() { return nullptr; }
 
-SingleFrameMemoryPool* Graphics::CreateSingleFrameMemoryPool(int32_t constantBufferPoolSize, int32_t drawingCount) { return nullptr; }
+SingleFrameMemoryPool* Graphics::CreateSingleFrameMemoryPool([[maybe_unused]] int32_t constantBufferPoolSize,
+															 [[maybe_unused]] int32_t drawingCount)
+{
+	return nullptr;
+}
 
-CommandList* Graphics::CreateCommandList(SingleFrameMemoryPool* memoryPool) { return nullptr; }
+CommandList* Graphics::CreateCommandList([[maybe_unused]] SingleFrameMemoryPool* memoryPool) { return nullptr; }
 
-ConstantBuffer* Graphics::CreateConstantBuffer(int32_t size) { return nullptr; }
+ConstantBuffer* Graphics::CreateConstantBuffer([[maybe_unused]] int32_t size) { return nullptr; }
 
-Texture* Graphics::CreateTexture(uint64_t id) { return nullptr; }
+Texture* Graphics::CreateTexture([[maybe_unused]] uint64_t id) { return nullptr; }
 
-RenderPassPipelineState* Graphics::CreateRenderPassPipelineState(RenderPass* renderPass) { return nullptr; }
+RenderPassPipelineState* Graphics::CreateRenderPassPipelineState([[maybe_unused]] RenderPass* renderPass) { return nullptr; }
 
-std::vector<uint8_t> Graphics::CaptureRenderTarget(Texture* renderTarget)
+std::vector<uint8_t> Graphics::CaptureRenderTarget([[maybe_unused]] Texture* renderTarget)
 {
 	Log(LogType::Error, "GetColorBuffer is not implemented.");
 	assert(0);
 	return std::vector<uint8_t>();
 }
 
-void Graphics::SetDisposed(const std::function<void()>& disposed) { disposed_ = disposed; }
+void Graphics::SetDisposed([[maybe_unused]] const std::function<void()>& disposed) { disposed_ = disposed; }
 
 } // namespace LLGI
