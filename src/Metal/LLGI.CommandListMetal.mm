@@ -9,6 +9,7 @@
 #include "LLGI.VertexBufferMetal.h"
 
 #import <MetalKit/MetalKit.h>
+#include <TargetConditionals.h>
 
 namespace LLGI
 {
