@@ -50,7 +50,7 @@ ConstantBuffer* SingleFrameMemoryPool::CreateConstantBuffer(int32_t size)
 {
 	assert(currentSwapBuffer_ >= 0);
 
-	if (constantBuffers_[currentSwapBuffer_].size() <= offsets_[currentSwapBuffer_])
+	if (static_cast<int32_t>(constantBuffers_[currentSwapBuffer_].size()) <= offsets_[currentSwapBuffer_])
 	{
 		auto cb = CreateConstantBufferInternal(size);
 		if (cb == nullptr)
@@ -76,8 +76,6 @@ ConstantBuffer* SingleFrameMemoryPool::CreateConstantBuffer(int32_t size)
 		offsets_[currentSwapBuffer_]++;
 		return newCb;
 	}
-
-	return nullptr;
 }
 
 bool RenderPass::assignRenderTextures(Texture** textures, int32_t count)

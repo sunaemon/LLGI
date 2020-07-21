@@ -82,7 +82,11 @@ Platform* CreatePlatform(const PlatformParameter& parameter, Window* window)
 	}
 #endif
 
-#ifdef _WIN32
+#if defined(__APPLE__)
+	auto obj = new PlatformMetal(window, parameter.WaitVSync);
+	return obj;
+
+#elif _WIN32
 
 	if (parameter.Device == DeviceType::Default || parameter.Device == DeviceType::DirectX12)
 	{
@@ -94,10 +98,6 @@ Platform* CreatePlatform(const PlatformParameter& parameter, Window* window)
 		}
 		return platform;
 	}
-
-#elif defined(__APPLE__)
-	auto obj = new PlatformMetal(window, parameter.WaitVSync);
-	return obj;
 
 #endif
 
