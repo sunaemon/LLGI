@@ -156,7 +156,7 @@ ShaderStageType SPIRV::GetStage() const { return shaderStage_; }
 
 const std::vector<uint32_t>& SPIRV::GetData() const { return data_; }
 
-bool SPIRVTranspiler::Transpile(const std::shared_ptr<SPIRV>& spirv) { return false; }
+bool SPIRVTranspiler::Transpile([[maybe_unused]] const std::shared_ptr<SPIRV>& spirv) { return false; }
 
 std::string SPIRVTranspiler::GetErrorCode() const { return errorCode_; }
 
@@ -418,7 +418,7 @@ bool SPIRVReflection::Transpile(const std::shared_ptr<SPIRV>& spirv)
 		auto count = compiler.get_member_count(resource.base_type_id);
 		auto spirvType = compiler.get_type(resource.type_id);
 
-		for (auto i = 0; i < count; i++)
+		for (size_t i = 0; i < count; i++)
 		{
 			ShaderReflectionUniform u;
 			auto memberType = compiler.get_member_type(spirvType, i);
