@@ -175,7 +175,7 @@ Vec2I WindowMac::GetFrameBufferSize() const
 	{
 		NSRect contentRect = [impl->window.contentView frame];
 		NSRect rect = [impl->window.contentView convertRectToBacking:contentRect];
-		return Vec2I(rect.size.width, rect.size.height);
+		return Vec2I(static_cast<int>(rect.size.width), static_cast<int>(rect.size.height));
 	}
 }
 
