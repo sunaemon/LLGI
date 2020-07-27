@@ -17,6 +17,8 @@
 namespace LLGI
 {
 
+namespace
+{
 std::string Replace(std::string target, std::string from_, std::string to_)
 {
 	std::string::size_type Pos(target.find(from_));
@@ -36,6 +38,7 @@ std::string dirnameOf(const std::string& fname)
 	size_t pos = fname.find_last_of("\\/");
 	return (std::string::npos == pos) ? "" : fname.substr(0, pos);
 }
+} // namespace
 
 // Based on https://github.com/KhronosGroup/glslang/blob/master/StandAlone/DirStackFileIncluder.h
 
@@ -46,7 +49,7 @@ class DirStackFileIncluder : public glslang::TShader::Includer
 {
 public:
 	DirStackFileIncluder(const std::function<std::vector<std::uint8_t>(std::string)>& onLoad)
-		: onLoad_(onLoad), externalLocalDirectoryCount(0)
+		: externalLocalDirectoryCount(0), onLoad_(onLoad)
 	{
 	}
 
@@ -133,6 +136,8 @@ protected:
 	}
 };
 
+namespace
+{
 EShLanguage GetGlslangShaderStage(ShaderStageType type)
 {
 	if (type == ShaderStageType::Vertex)
@@ -141,6 +146,7 @@ EShLanguage GetGlslangShaderStage(ShaderStageType type)
 		return EShLanguage::EShLangFragment;
 	throw std::string("Unimplemented ShaderStage");
 }
+} // namespace
 
 SPIRV::SPIRV(const std::vector<uint32_t>& data, ShaderStageType shaderStage) : data_(data), shaderStage_(shaderStage) {}
 
@@ -286,7 +292,6 @@ bool SPIRVToGLSLTranspiler::Transpile(const std::shared_ptr<SPIRV>& spirv)
 
 	for (auto& resource : resources.sampled_images)
 	{
-		auto b = compiler.get_decoration(resource.id, spv::DecorationBinding);
 		auto i = compiler.get_decoration(resource.id, spv::DecorationLocation);
 		compiler.set_decoration(resource.id, spv::DecorationBinding, binding_offset + i);
 
