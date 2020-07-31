@@ -6,11 +6,11 @@
 
 #include <functional>
 #include <iostream>
-#include <spirv_cross/spirv_cross.hpp>
-#include <spirv_cross/spirv_glsl.hpp>
-#include <spirv_cross/spirv_hlsl.hpp>
-#include <spirv_cross/spirv_msl.hpp>
-#include <spirv_cross/spirv_reflect.hpp>
+#include <spirv_cross.hpp>
+#include <spirv_glsl.hpp>
+#include <spirv_hlsl.hpp>
+#include <spirv_msl.hpp>
+#include <spirv_reflect.hpp>
 
 #include "ResourceLimits.h"
 
