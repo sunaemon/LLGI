@@ -3,6 +3,7 @@
 namespace LLGI
 {
 
+#ifndef LLGI_USE_WAYLAND
 bool WindowLinux::Initialize(const char* title, const Vec2I& windowSize)
 {
 
@@ -96,7 +97,18 @@ void* WindowLinux::GetNativePtr(int32_t index)
 		return reinterpret_cast<void*>(GetWindow());
 	return nullptr;
 }
+#else
+bool WindowLinux::Initialize(const char* title, const Vec2I& windowSize) { return false; }
 
-Vec2I WindowLinux::GetWindowSize() const { return windowSize_; }
+WindowLinux::~WindowLinux() { Terminate(); }
+
+bool WindowLinux::DoEvent() { return false; }
+
+void WindowLinux::Terminate() {}
+
+bool WindowLinux::OnNewFrame() { return DoEvent(); }
+
+void* WindowLinux::GetNativePtr(int32_t index) { return nullptr; }
+#endif
 
 } // namespace LLGI

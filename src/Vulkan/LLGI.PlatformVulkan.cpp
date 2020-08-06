@@ -371,6 +371,8 @@ bool PlatformVulkan::Initialize(Window* window, bool waitVSync)
 		VK_KHR_SURFACE_EXTENSION_NAME,
 #ifdef _WIN32
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+#elif defined(LLGI_USE_WAYLAND)
+		VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
 #else
 		VK_KHR_XCB_SURFACE_EXTENSION_NAME,
 #endif
@@ -460,11 +462,17 @@ bool PlatformVulkan::Initialize(Window* window, bool waitVSync)
 		surfaceCreateInfo.hinstance = (HINSTANCE)window->GetNativePtr(1);
 		surfaceCreateInfo.hwnd = (HWND)window->GetNativePtr(0);
 		surface_ = vkInstance_.createWin32SurfaceKHR(surfaceCreateInfo);
+#elif defined(LLGI_USE_WAYLAND)
+		vk::WaylandSurfaceCreateInfoKHR surfaceCreateInfo;
+		surfaceCreateInfo.display = reinterpret_cast<wl_display*>(window->GetNativePtr(0));
+		surfaceCreateInfo.surface = reinterpret_cast<wl_surface*>(window->GetNativePtr(1));
+		surface_ = vkInstance_.createWaylandSurfaceKHR(surfaceCreateInfo);
 #else
 		vk::XcbSurfaceCreateInfoKHR surfaceCreateInfo;
 		surfaceCreateInfo.connection = XGetXCBConnection((Display*)window->GetNativePtr(0));
 		surfaceCreateInfo.window = ((::Window)window->GetNativePtr(1));
 		surface_ = vkInstance_.createXcbSurfaceKHR(surfaceCreateInfo);
+
 #endif
 		// create device
 

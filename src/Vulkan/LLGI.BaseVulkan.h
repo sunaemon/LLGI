@@ -5,12 +5,15 @@
 #include <sstream>
 #include <unordered_map>
 
-#ifdef _WIN32
 #define VK_PROTOTYPES
+#ifdef _WIN32
 #define VK_USE_PLATFORM_WIN32_KHR
 #else
-#define VK_PROTOTYPES
+#ifdef LLGI_USE_WAYLAND
+#define VK_USE_PLATFORM_WAYLAND_KHR
+#else
 #define VK_USE_PLATFORM_XCB_KHR
+#endif
 #endif
 
 #include <vulkan/vulkan.h>
