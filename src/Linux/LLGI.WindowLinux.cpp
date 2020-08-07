@@ -1,9 +1,21 @@
 #include "LLGI.WindowLinux.h"
 
+#ifndef LLGI_USE_WAYLAND
+#include <X11/Xlib-xcb.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#undef Always
+#endif
+
+#include <locale.h>
+#include <string>
+
 namespace LLGI
 {
 
 #ifndef LLGI_USE_WAYLAND
+WindowLinux::WindowLinux() = default;
+
 bool WindowLinux::Initialize(const char* title, const Vec2I& windowSize)
 {
 
@@ -98,6 +110,8 @@ void* WindowLinux::GetNativePtr(int32_t index)
 	return nullptr;
 }
 #else
+WindowLinux::WindowLinux() = default;
+
 bool WindowLinux::Initialize(const char* title, const Vec2I& windowSize) { return false; }
 
 WindowLinux::~WindowLinux() { Terminate(); }

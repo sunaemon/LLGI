@@ -2,13 +2,16 @@
 
 #include "../LLGI.Base.h"
 #ifndef LLGI_USE_WAYLAND
-#include <X11/Xlib-xcb.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+using XID = unsigned long;
+using Window = XID;
+struct _XDisplay;
+using Display = _XDisplay;
+struct _XGC;
+using GC = _XGC*;
+using Atom = unsigned long;
 #else
 #endif
-#include <locale.h>
-#include <string>
+#include <memory>
 
 namespace LLGI
 {
@@ -27,7 +30,7 @@ private:
 	Vec2I windowSize_;
 
 public:
-	WindowLinux() = default;
+	WindowLinux();
 
 	~WindowLinux() override;
 

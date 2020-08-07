@@ -7,6 +7,12 @@
 #include <Windows.h>
 #endif
 
+#ifdef __linux__
+#ifndef LLGI_USE_WAYLAND
+#include <X11/Xlib-xcb.h>
+#endif
+#endif
+
 namespace LLGI
 {
 
