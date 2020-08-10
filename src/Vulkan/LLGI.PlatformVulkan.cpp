@@ -411,7 +411,7 @@ bool PlatformVulkan::Initialize(Window* window, bool waitVSync)
 		vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
 		std::vector<VkLayerProperties> availableLayers(layerCount);
-		vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+		LLGI_VK_CHECK(vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data()));
 
 		bool validationLayerFound = false;
 		for (const auto& layerProperties : availableLayers)
@@ -419,20 +419,22 @@ bool PlatformVulkan::Initialize(Window* window, bool waitVSync)
 			std::stringstream ss;
 			ss << "layer " << layerProperties.layerName << " is avalable";
 			Log(LogType::Debug, ss.str());
-			if (strcmp(layerProperties.layerName, "VK_LAYER_LUNARG_standard_validation") == 0)
+			if (strcmp(layerProperties.layerName, "VK_LAYER_KHRONOS_validation") == 0)
 			{
 				validationLayerFound = true;
 			}
 		}
 
-		const std::vector<const char*> validationLayers = {"VK_LAYER_LUNARG_standard_validation"};
-
-		Log(LogType::Warning, "Failed to activate validation layer");
+		const std::vector<const char*> validationLayers = {"VK_LAYER_KHRONOS_validation"};
 
 		if (validationLayerFound)
 		{
 			instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
 			instanceCreateInfo.ppEnabledLayerNames = validationLayers.data();
+		}
+		else
+		{
+			Log(LogType::Warning, "Failed to activate validation layer");
 		}
 #endif
 
